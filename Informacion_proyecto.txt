@@ -1,0 +1,58 @@
+Presentación:
+El proyecto Hotel cuenta con 8 entidades, las cuales se eligieron por una investigación previa, que representan las 
+diferentes problemáticas que debe resolver este sector en la cotidianidad. Se pensó de tal manera que satisfaga las necesidades de los hoteles en general, para posteriormente que éste se pueda adaptar a las necesidades de uno en específico.
+
+Diccionario de datos:
+	
+- Habitaciones: 
+    *Entidad que modela una habitación del hotel en el sistema.
+    *Id: identificador único. Nombre: Indica el bloque y piso. Camas: cantidad de camas. Estado: indica
+     si está reservado.
+    *Reservar, liberar.
+
+- Recepcionistas: 
+    *Entidad que modela una recepcionista del hotel en el sistema.
+    *Id: identificador único. Carnet: identificación en wl hotel Nombre: nombre y apellido del recepcionista.
+    *calcular pago, terminar_contrato
+
+- Opiniones
+    *Entidad que modela la opinión de un cliente del hotel en el sistema.
+    *Id: identificador único. Opinion: opción del cliente. Cantidad: número de clientes que eligieron esa opinión.
+    *Mostrar porcentaje por opinión.
+
+- Clientes
+    *Entidad que modela un cliente del hotel en el sistema.
+    *Id: identificador único. Cedula, Nombre: nombre y apellido del cliente. Opinion, _Opinion:
+    referencia a su opinión del hotel.
+    *Opinar
+
+- Servicios
+    *Entidad que modela un servicio elegido por el cliente en el sistema.
+    *Id: identificador único. Tipo: el servicio a escoger. Tarifa: valor del servicio.
+    *Escoger servicio
+
+- Reservas
+    *Entidad que modela la factura de una reserva hecha por el cliente en el sistema.
+    *Id: identificador único. Código: identificador de la reserva. Fecha_entrada, Fecha_salida: 
+    estadía. Cliente, Recepcionista, Habitacion: relaciones con las demás clases.
+    *Mostrar detalles reserva
+
+- Servicios_Reservas
+    *Entidad que modela la relación n:m entre las clases Servicios y Reservas en el sistema.
+    *Id: identificador único. Servicio, Reserva: relaciones con las demás clases.
+    *Calcular valor total de los servicios
+
+ - Pagos
+    *Entidad que modela un pago hecho por el cliente en el sistema.
+    *Id: identificador único. Total: valor total de la estancia. Medio: medio de pago. 
+    Reserva, Promocion: relaciones con las demás clases.
+    *Calcular pago, 
+
+
+-Promociones
+    *Entidad que modela una rebaja en el total a pagar de un cliente en el sistema.
+    *Id: identificador único. Descuento: rebaja al total a pagar. 
+    *Empezar, Finalizar
+
+
+Conclusiones:
