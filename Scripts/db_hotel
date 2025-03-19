@@ -1,0 +1,108 @@
+CREATE DATABASE db_hotel;
+
+GO
+
+USE db_hotel;
+
+CREATE TABLE [Habitaciones] ([Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+                            [Nombre] NVARCHAR(100) NOT NULL,
+                            [Camas] INT NOT NULL DEFAULT 1,
+                            [Estado] BIT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE [Recepcionistas] ([Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+                            [Carnet] NVARCHAR(10) NOT NULL UNIQUE ,
+                            [Nombre] NVARCHAR(100) UNIQUE NOT NULL,
+                            [Salario] FLOAT NOT NULL DEFAULT 0
+
+);
+
+GO
+
+INSERT INTO [Habitaciones] ([Nombre], [Camas], [Estado])
+                    VALUES('M 203', 2, 0);
+
+INSERT INTO [Habitaciones] ([Nombre], [Camas], [Estado])
+                    VALUES('N 406', 2, 1); 
+
+INSERT INTO [Habitaciones] ([Nombre], [Camas], [Estado])
+                    VALUES('J 101', 4, 0);  
+
+
+INSERT INTO [Recepcionistas] ([Carnet], [Nombre], [Salario])
+                    VALUES('L788954', 'Carmen Vallejo', 1800000);      
+
+INSERT INTO [Recepcionistas] ([Carnet], [Nombre], [Salario])
+                    VALUES('BA685233', 'Marlon Manriquez', 1890000); 
+
+INSERT INTO [Recepcionistas] ([Carnet], [Nombre], [Salario])
+                    VALUES('P788954', 'Oscar Villanueba', 2360000);  
+
+GO
+
+SELECT [Id],[Nombre], [Camas], [Estado] FROM [Habitaciones];
+SELECT [Id], [Carnet], [Nombre], [Salario] FROM [Recepcionistas];
+
+
+GO 
+
+CREATE TABLE [Opiniones] ([Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+                        [Opcion] NVARCHAR(30) DEFAULT NULL,
+                        [Cantidad] SMALLINT DEFAULT 0,
+);
+
+CREATE TABLE [Clientes] ([Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+                        [Cedula] NVARCHAR(20) NOT NULL UNIQUE,
+                        [Nombre] NVARCHAR(65) NOT NULL,
+                        [Opinion] INT NOT NULL REFERENCES [Opiniones] ([Id])
+);
+
+CREATE TABLE [Reservas] ([Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+                        [Codigo] NVARCHAR(20) NOT NULL UNIQUE,
+                        [Fecha_entrada] SMALLDATETIME NOT NULL,
+                        [Fecha_salida] SMALLDATETIME NOT NULL,
+                        [Recepcionista] INT NOT NULL REFERENCES [Recepcionistas] ([Id]),
+                        [Cliente] INT NOT NULL REFERENCES [Clientes] ([Id]),
+                        [Habitacion] INT NOT NULL REFERENCES [Habitaciones] ([Id])
+);
+
+INSERT INTO [Opiniones] ([Opcion], [Cantidad])
+                    VALUES('Muy Mala', 17); 
+ 
+INSERT INTO [Opiniones] ([Opcion], [Cantidad])
+                    VALUES('Mala', 22); 
+
+
+INSERT INTO [Opiniones] ([Opcion], [Cantidad])
+                    VALUES('Buena', 75);  
+
+INSERT INTO [Opiniones] ([Opcion], [Cantidad])
+                    VALUES('Muy Buena', 6);                      
+                                                    
+  
+
+INSERT INTO [Clientes] ([Cedula], [Nombre], [Opinion])
+                    VALUES('788954', 'Oscar Villanueba', 1);      
+
+INSERT INTO [Clientes] ([Cedula], [Nombre], [Opinion])
+                    VALUES('965841', 'Pedro Villares', 4);   
+
+INSERT INTO [Clientes] ([Cedula], [Nombre], [Opinion])
+                    VALUES('589154', 'Patricioa Rios', 2);   
+
+
+INSERT INTO [Reservas] ([Codigo], [Fecha_entrada], [Fecha_salida],[Recepcionista],[Cliente],[Habitacion])
+                    VALUES('AS487d983', GETDATE(), GETDATE(), 2, 1, 3);  
+
+INSERT INTO [Reservas] ([Codigo], [Fecha_entrada], [Fecha_salida],[Recepcionista],[Cliente],[Habitacion])
+                    VALUES('KI5435e457', GETDATE(), GETDATE(), 3, 2, 1);   
+
+INSERT INTO [Reservas] ([Codigo], [Fecha_entrada], [Fecha_salida],[Recepcionista],[Cliente],[Habitacion])
+                    VALUES('YM6321g100', GETDATE(), GETDATE(), 1, 3, 2);  
+
+GO
+
+SELECT [Id], [Opcion], [Cantidad] FROM [Opiniones];
+SELECT [Id], [Cedula], [Nombre], [Opinion] FROM [Clientes];
+SELECT [Id], [Codigo], [Fecha_entrada], [Fecha_salida],[Recepcionista],[Cliente],[Habitacion] FROM [Reservas];
+
