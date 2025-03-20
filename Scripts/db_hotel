@@ -106,3 +106,43 @@ SELECT [Id], [Opcion], [Cantidad] FROM [Opiniones];
 SELECT [Id], [Cedula], [Nombre], [Opinion] FROM [Clientes];
 SELECT [Id], [Codigo], [Fecha_entrada], [Fecha_salida],[Recepcionista],[Cliente],[Habitacion] FROM [Reservas];
 
+GO
+
+CREATE TABLE [Servicios] ([Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+                        [Tipo] NVARCHAR(50) NOT NULL,
+                        [Tarifa] FLOAT NOT NULL,
+);
+
+CREATE TABLE [Servicios_Reservas] ([Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+                                [Servicio] INT NOT NULL REFERENCES [Servicios] ([Id]),
+                                [Reserva] INT NOT NULL REFERENCES [Reservas] ([Id])
+);
+
+CREATE TABLE [Promociones] ([Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+                        [Descuento] SMALLINT NOT NULL DEFAULT 0,
+                        [Fecha_Inicio] SMALLDATETIME NOT NULL,
+                        [Fecha_Fin] SMALLDATETIME NOT NULL 
+);
+
+CREATE TABLE [Pagos] ([Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+                    [Total] FLOAT NOT NULL,
+                    [Medio] NVARCHAR(50) NOT NULL,
+                    [Reserva] INT NOT NULL REFERENCES [Reservas] ([Id]),
+                    [Promocion] INT NOT NULL REFERENCES [Promociones] ([Id])
+);
+
+GO
+
+INSERT INTO [Servicios] ([Tipo], [Tarifa])
+                    VALUES('Restaurante', 169000);
+
+INSERT INTO [Servicios] ([Tipo], [Tarifa])
+                    VALUES('Piscina', 109000);
+
+INSERT INTO [Servicios] ([Tipo], [Tarifa])
+                    VALUES('Discoteca', 71600);
+
+INSERT INTO [Servicios] ([Tipo], [Tarifa])
+                    VALUES('Limpieza', 136000); 
+
+                                                                    
