@@ -73,9 +73,8 @@ namespace Hotel.Modelos{
         public int Id {get;set;}
         public string? Tipo {get;set;}
         public double Tarifa {get;set;}
-        public string? Descripcion {get;set;}
 
-        public List<Servicios_Reservas>? Servicios_Reservas {get;set;}
+        //public List<Servicios_Reservas>? Servicios_Reservas {get;set;}
 
     }
 
@@ -86,12 +85,23 @@ namespace Hotel.Modelos{
         public int Servicio {get;set;}
         public int Reserva {get;set;}
 
-        public Servicios? _Servicio {get;set;}
-        public Reservas? _Reserva {get;set;}
+        [ForeignKey("Servicio")] public Servicios? _Servicio {get;set;}
+        [ForeignKey("Reserva")] public Reservas? _Reserva {get;set;}
 
     }
 
-    public class Pagos{
+    public class Promociones{
+
+        public int Id {get;set;}
+        public short Descuento {get;set;} 
+        public DateTime Fecha_Inicio {get;set;}
+        public DateTime Fecha_Fin {get;set;}
+
+        public List<Pagos>? pagos {get;set;}
+
+    }
+
+        public class Pagos{
 
         public int Id {get;set;}
         public double Total {get;set;}
@@ -100,19 +110,8 @@ namespace Hotel.Modelos{
         public int Reserva {get;set;}
         public int Promocion {get;set;}
 
-        public Reservas? _Reserva {get;set;}
-        public Promociones? _Promocion {get;set;}
-
-    }
-
-    public class Promociones{
-
-        public int Id {get;set;}
-        public short Descuento {get;set;}  //Lista de descuentos
-        public DateTime Fecha_Inicio {get;set;}
-        public DateTime Fecha_Fin {get;set;}
-
-        public List<Pagos>? pagos {get;set;}
+        [ForeignKey("Reserva")] public Reservas? _Reserva {get;set;}
+        [ForeignKey("Promocion")] public Promociones? _Promocion {get;set;}
 
     }
 }
